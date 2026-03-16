@@ -7,8 +7,7 @@ import { Suspense } from 'react'
 import { TokenListServer } from '@/components/token-list'
 import Loading from './loading'
 
-export default function Home()
-
+export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
