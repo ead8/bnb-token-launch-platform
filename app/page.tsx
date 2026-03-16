@@ -5,12 +5,9 @@ import { Input } from '@/components/ui/input'
 import { Search, Zap, Flame } from 'lucide-react'
 import { Suspense } from 'react'
 import { TokenListServer } from '@/components/token-list'
-import { useSearchParams } from 'next/navigation'
 import Loading from './loading'
 
 export default function Home() {
-  const searchParams = useSearchParams()
-
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
