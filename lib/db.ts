@@ -7,17 +7,16 @@ export async function getUser(address: string) {
   return result[0] || null
 }
 
-export async function createUser(address: string, ens?: string) {
-  const result = await sql`INSERT INTO users (wallet_address, ens_name, created_at) 
-     VALUES (${address.toLowerCase()}, ${ens || null}, NOW()) 
-     ON CONFLICT (wallet_address) DO UPDATE SET last_login = NOW()
+export async function createUser(address: string, username?: string) {
+  const result = await sql`INSERT INTO users (wallet_address, username, created_at) 
+     VALUES (${address.toLowerCase()}, ${username || null}, NOW()) 
      RETURNING *`
   return result[0]
 }
 
 export async function getTokens(limit = 50, offset = 0) {
   const result = await sql`SELECT * FROM tokens 
-     ORDER BY market_cap DESC NULLS LAST 
+     ORDER BY market_cap_bnb DESC NULLS LAST 
      LIMIT ${limit} OFFSET ${offset}`
   return result
 }
@@ -37,16 +36,16 @@ export async function createToken(data: {
   symbol: string
   description: string
   image_url?: string
-  creator_address: string
+  creator_id: number
   contract_address: string
   initial_supply: number
-  fee_percentage?: number
+  fee_percent?: number
 }) {
   const result = await sql`INSERT INTO tokens (
-      name, symbol, description, image_url, creator_address, 
-      contract_address, initial_supply, fee_percentage, created_at
-    ) VALUES (${data.name}, ${data.symbol}, ${data.description}, ${data.image_url || null}, ${data.creator_address.toLowerCase()}, 
-      ${data.contract_address.toLowerCase()}, ${data.initial_supply}, ${data.fee_percentage || 0}, NOW())
+      name, symbol, description, image_url, creator_id, 
+      contract_address, initial_supply, total_supply, fee_percent, created_at
+    ) VALUES (${data.name}, ${data.symbol}, ${data.description}, ${data.image_url || null}, ${data.creator_id}, 
+      ${data.contract_address.toLowerCase()}, ${data.initial_supply}, ${data.initial_supply}, ${data.fee_percent || 0}, NOW())
     RETURNING *`
   return result[0]
 }
@@ -86,7 +85,7 @@ export async function getLeaderboard(type: 'earners' | 'tokens', limit = 50) {
     return result
   } else {
     const result = await sql`SELECT * FROM tokens 
-       ORDER BY market_cap DESC NULLS LAST 
+       ORDER BY market_cap_bnb DESC NULLS LAST 
        LIMIT ${limit}`
     return result
   }
