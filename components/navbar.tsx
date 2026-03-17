@@ -3,15 +3,15 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { Menu, X, Wallet, LogOut } from 'lucide-react'
-import { useAccount, useConnect, useDisconnect } from 'wagmi'
-import { injected } from 'wagmi/connectors'
+import { useAccount, useDisconnect } from 'wagmi'
+import { useWeb3Modal } from '@web3modal/wagmi/react'
 import { Button } from '@/components/ui/button'
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const { address, isConnected } = useAccount()
-  const { connect } = useConnect()
   const { disconnect } = useDisconnect()
+  const { open } = useWeb3Modal()
 
   const navLinks = [
     { href: '/', label: 'Home' },
@@ -26,8 +26,8 @@ export function Navbar() {
     return `${addr.slice(0, 6)}...${addr.slice(-4)}`
   }
 
-  const handleConnect = () => {
-    connect({ connector: injected() })
+  const handleConnect = async () => {
+    await open()
   }
 
   return (
