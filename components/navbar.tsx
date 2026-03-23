@@ -35,11 +35,9 @@ export function Navbar() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-primary/60">
-              <span className="text-lg font-bold text-primary-foreground">T</span>
-            </div>
-            <span className="hidden font-bold text-foreground sm:inline">TokenLaunch</span>
+          <Link href="/" className="flex items-center gap-2 group hover:opacity-80 transition-opacity">
+            <img src="/launchpad-logo.png" alt="LaunchPad" className="h-10 w-10 object-contain" />
+            <span className="hidden font-bold text-foreground sm:inline bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">LaunchPad</span>
           </Link>
 
           {/* Desktop Navigation */}

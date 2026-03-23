@@ -13,29 +13,32 @@ export default function Home() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="border-b border-border bg-gradient-to-b from-card/40 to-background py-12 sm:py-16">
+      <section className="border-b border-border/50 bg-gradient-to-b from-primary/10 via-card/40 to-background py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="space-y-6">
-            <div className="space-y-2">
-              <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                Launch Your Token on BNB Chain
+            <div className="space-y-3">
+              <div className="inline-block rounded-full bg-primary/20 px-4 py-1 text-sm font-semibold text-primary">
+                Premium Token Launching on BNB Chain
+              </div>
+              <h1 className="text-5xl sm:text-6xl font-bold tracking-tight text-balance bg-gradient-to-r from-foreground via-foreground to-muted-foreground bg-clip-text text-transparent">
+                Launch Your Token with Confidence
               </h1>
-              <p className="text-lg text-muted-foreground">
-                Create, launch, and manage your token with advanced features like fee sharing and auto-buyback
+              <p className="text-xl text-muted-foreground max-w-2xl">
+                LaunchPad is the premium platform to launch, manage, and grow your tokens with industry-leading tools, analytics, and community features.
               </p>
             </div>
 
-            <div className="flex flex-col gap-4 sm:flex-row">
-              <Link href="/create" className="flex-1">
-                <Button size="lg" className="w-full gap-2 bg-primary hover:bg-primary/90">
+            <div className="flex flex-col gap-3 sm:flex-row sm:gap-4 pt-4">
+              <Link href="/create">
+                <Button size="lg" className="gap-2 bg-gradient-to-r from-primary to-primary/80 hover:shadow-lg hover:shadow-primary/50 transition-all">
                   <Zap className="h-5 w-5" />
-                  Launch Token
+                  Launch Token Now
                 </Button>
               </Link>
-              <Link href="/tokens" className="flex-1">
-                <Button size="lg" variant="outline" className="w-full gap-2 bg-transparent">
+              <Link href="/tokens">
+                <Button size="lg" variant="outline" className="gap-2 border-primary/50 hover:border-primary hover:bg-primary/5">
                   <Search className="h-5 w-5" />
-                  Browse Tokens
+                  Explore Tokens
                 </Button>
               </Link>
             </div>

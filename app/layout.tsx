@@ -9,25 +9,17 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'TokenLaunch - BNB Chain Token Platform',
-  description: 'Launch and trade tokens on BNB Chain with advanced features including fee sharing, auto-buyback, and leaderboards',
+  title: 'LaunchPad - Premium Token Launch Platform on BNB Chain',
+  description: 'LaunchPad: The premium platform to launch, trade, and grow your tokens on BNB Chain. Advanced features including fee sharing, market analytics, and creator dashboards.',
   generator: 'v0.app',
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+    icon: '/launchpad-logo.png',
+    apple: '/launchpad-logo.png',
+  },
+  openGraph: {
+    title: 'LaunchPad - Token Launch Platform',
+    description: 'Premium token launching platform on BNB Chain',
+    type: 'website',
   },
 }
 

@@ -1,11 +1,7 @@
-'use client'
-
-import { useState } from 'react'
 import Link from 'next/link'
 import { Navbar } from '@/components/navbar'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
 import { ArrowUpRight, ArrowDownRight, Copy, Share2, Heart } from 'lucide-react'
 
 // Mock token data
@@ -32,13 +28,76 @@ const TOKEN_DATA = {
     ],
     bondingCurveData: { current: 65, max: 100 },
   },
+  2: {
+    name: 'Stellar Moon',
+    symbol: 'SM',
+    price: 0.0089,
+    change: 89.3,
+    holders: 8900,
+    mc: '1.78M',
+    volume24h: '156K',
+    logo: '🌙',
+    description: 'Reaching for the stars with Stellar Moon on BNB Chain.',
+    tokenAddress: '0x2345678901234567890123456789012345678901',
+    feeSharing: ['Twitter', 'Discord'],
+    taxRate: 3,
+    holdersData: [
+      { address: '0xaaa...', percentage: 15.2, amount: '1.4M' },
+      { address: '0xbbb...', percentage: 9.1, amount: '820K' },
+      { address: '0xccc...', percentage: 7.3, amount: '660K' },
+      { address: '0xddd...', percentage: 5.8, amount: '520K' },
+      { address: '0xeee...', percentage: 4.5, amount: '410K' },
+    ],
+    bondingCurveData: { current: 42, max: 100 },
+  },
+  3: {
+    name: 'Phoenix Rise',
+    symbol: 'PR',
+    price: 0.0567,
+    change: 234.1,
+    holders: 19300,
+    mc: '5.67M',
+    volume24h: '567K',
+    logo: '🔥',
+    description: 'Rising from the ashes stronger than ever on BNB Chain.',
+    tokenAddress: '0x3456789012345678901234567890123456789012',
+    feeSharing: ['Twitter', 'GitHub', 'TikTok', 'Twitch'],
+    taxRate: 7,
+    holdersData: [
+      { address: '0x111...', percentage: 18.5, amount: '2.1M' },
+      { address: '0x222...', percentage: 12.3, amount: '1.4M' },
+      { address: '0x333...', percentage: 8.7, amount: '990K' },
+      { address: '0x444...', percentage: 6.2, amount: '710K' },
+      { address: '0x555...', percentage: 5.1, amount: '580K' },
+    ],
+    bondingCurveData: { current: 88, max: 100 },
+  },
+  4: {
+    name: 'Diamond Hands',
+    symbol: 'DH',
+    price: 0.0123,
+    change: -12.5,
+    holders: 5600,
+    mc: '780K',
+    volume24h: '89K',
+    logo: '💎',
+    description: 'For those with diamond hands who HODL through everything.',
+    tokenAddress: '0x4567890123456789012345678901234567890123',
+    feeSharing: ['Twitter'],
+    taxRate: 2,
+    holdersData: [
+      { address: '0x666...', percentage: 22.1, amount: '890K' },
+      { address: '0x777...', percentage: 14.5, amount: '580K' },
+      { address: '0x888...', percentage: 10.2, amount: '410K' },
+      { address: '0x999...', percentage: 7.8, amount: '315K' },
+      { address: '0xfff...', percentage: 6.3, amount: '255K' },
+    ],
+    bondingCurveData: { current: 25, max: 100 },
+  },
 }
 
-export default function TokenDetailPage({ params }: { params: { id: string } }) {
-  const token = TOKEN_DATA[params.id as keyof typeof TOKEN_DATA]
-  const [buyAmount, setBuyAmount] = useState('')
-  const [sellAmount, setSellAmount] = useState('')
-  const [copied, setCopied] = useState(false)
+async function TokenDetailContent({ id }: { id: string }) {
+  const token = TOKEN_DATA[id as keyof typeof TOKEN_DATA]
 
   if (!token) {
     return (
@@ -52,12 +111,6 @@ export default function TokenDetailPage({ params }: { params: { id: string } }) 
         </div>
       </div>
     )
-  }
-
-  const handleCopy = (text: string) => {
-    navigator.clipboard.writeText(text)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
   }
 
   const isPositive = token.change >= 0
@@ -220,23 +273,11 @@ export default function TokenDetailPage({ params }: { params: { id: string } }) 
               <Card className="border border-primary/50 bg-gradient-to-br from-primary/10 to-background p-6">
                 <h3 className="mb-4 text-lg font-semibold text-foreground">Buy {token.symbol}</h3>
                 <div className="space-y-3">
-                  <div>
-                    <label className="text-sm text-muted-foreground">Amount (BNB)</label>
-                    <Input
-                      type="number"
-                      placeholder="0.0"
-                      value={buyAmount}
-                      onChange={(e) => setBuyAmount(e.target.value)}
-                      className="mt-1 bg-input border-border"
-                    />
-                  </div>
                   <div className="rounded-lg bg-secondary/50 p-3">
-                    <p className="text-xs text-muted-foreground">You'll receive</p>
-                    <p className="text-lg font-bold text-foreground">
-                      {buyAmount ? (parseFloat(buyAmount) / token.price).toFixed(2) : '0'} {token.symbol}
-                    </p>
+                    <p className="text-xs text-muted-foreground">Current Price</p>
+                    <p className="text-lg font-bold text-foreground">${token.price.toFixed(4)} BNB</p>
                   </div>
-                  <Button className="w-full bg-green-600 hover:bg-green-700">Buy Now</Button>
+                  <Button className="w-full bg-green-600 hover:bg-green-700">Connect Wallet to Buy</Button>
                 </div>
               </Card>
 
@@ -244,23 +285,11 @@ export default function TokenDetailPage({ params }: { params: { id: string } }) 
               <Card className="border border-border bg-card p-6">
                 <h3 className="mb-4 text-lg font-semibold text-foreground">Sell {token.symbol}</h3>
                 <div className="space-y-3">
-                  <div>
-                    <label className="text-sm text-muted-foreground">Amount ({token.symbol})</label>
-                    <Input
-                      type="number"
-                      placeholder="0.0"
-                      value={sellAmount}
-                      onChange={(e) => setSellAmount(e.target.value)}
-                      className="mt-1 bg-input border-border"
-                    />
-                  </div>
                   <div className="rounded-lg bg-secondary/50 p-3">
-                    <p className="text-xs text-muted-foreground">You'll receive</p>
-                    <p className="text-lg font-bold text-foreground">
-                      {sellAmount ? (parseFloat(sellAmount) * token.price).toFixed(4) : '0'} BNB
-                    </p>
+                    <p className="text-xs text-muted-foreground">Current Price</p>
+                    <p className="text-lg font-bold text-foreground">${token.price.toFixed(4)} BNB</p>
                   </div>
-                  <Button className="w-full bg-red-600 hover:bg-red-700">Sell Now</Button>
+                  <Button className="w-full bg-red-600 hover:bg-red-700">Connect Wallet to Sell</Button>
                 </div>
               </Card>
 
@@ -300,4 +329,9 @@ export default function TokenDetailPage({ params }: { params: { id: string } }) 
       </section>
     </div>
   )
+}
+
+export default async function TokenDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  return <TokenDetailContent id={id} />
 }
