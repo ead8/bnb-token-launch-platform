@@ -208,14 +208,10 @@ async function TokenDetailContent({ id }: { id: string }) {
                     <p className="mb-2 text-sm text-muted-foreground">Contract Address</p>
                     <div className="flex items-center gap-2 rounded-lg bg-secondary p-3">
                       <code className="flex-1 font-mono text-xs text-foreground">{token.tokenAddress}</code>
-                      <button
-                        onClick={() => handleCopy(token.tokenAddress)}
-                        className="text-muted-foreground hover:text-foreground transition-colors"
-                      >
+                      <span className="text-muted-foreground cursor-pointer hover:text-foreground transition-colors">
                         <Copy className="h-4 w-4" />
-                      </button>
+                      </span>
                     </div>
-                    {copied && <p className="mt-1 text-xs text-accent">Copied!</p>}
                   </div>
 
                   <div className="grid grid-cols-2 gap-4 border-t border-border pt-4">
